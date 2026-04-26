@@ -1,0 +1,44 @@
+# LGRC2024 dataset config for Ultralytics YOLOv8 training.
+#
+# IMPORTANT: The original LGRC2024 labels appear to use 1-indexed class IDs
+# (lowest seen ID is 1, never 0). Run `python scripts/prepare_dataset.py --remap`
+# once before training to copy the labels to a 0-indexed version under
+# `LGRC2024 dataset/datasets_yolo/`. After that, this `path:` should point at
+# the remapped tree. Until then, you can override `path:` to a local Drive
+# mount when running on Colab.
+
+path: /content/drive/MyDrive/LGRC2024_yolo   # Colab default; override locally
+train: images/train
+val: images/val
+# test:  # no test split exists in LGRC2024
+
+nc: 28
+names:
+  0: keySignature-bB    # 上字调 — B♭ major
+  1: keySignature-C     # 尺字调 — C major
+  2: keySignature-D     # 小工调 — D major (most common in Kunqu)
+  3: keySignature-bE    # 凡字调 — E♭ major
+  4: keySignature-F     # 六字调 — F major
+  5: keySignature-G     # 五字调 — G major
+  6: keySignature-A     # 乙字调 — A major
+  7: note-C3
+  8: note-D3
+  9: note-E3
+  10: note-F3
+  11: note-G3           # 合 (Hé)
+  12: note-A3           # 四 (Sì)
+  13: note-B3           # 一 (Yī)
+  14: note-C4           # 上 (Shàng) — middle C in C-major reference
+  15: note-D4           # 尺 (Chǐ)
+  16: note-E4           # 工 (Gōng)
+  17: note-F4           # 凡 (Fán)
+  18: note-G4           # 六 (Liù)
+  19: note-A4           # 五 (Wǔ)
+  20: note-B4           # 乙 (Yǐ)
+  21: note-C5           # 亻上
+  22: note-D5           # 亻尺
+  23: note-E5           # 亻工
+  24: note-F5           # 亻凡
+  25: note-G5           # 亻六
+  26: note-A5           # 亻五
+  27: note-B5           # 亻乙

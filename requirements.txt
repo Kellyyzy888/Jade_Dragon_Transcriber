@@ -1,0 +1,24 @@
+# Core
+ultralytics>=8.2.0          # YOLOv8/YOLOv11
+music21>=9.1.0              # MusicXML <-> MIDI
+Pillow>=10.0.0
+numpy>=1.24.0
+opencv-python>=4.8.0
+pyyaml>=6.0
+
+# Lyric OCR (optional — manual fallback works without it)
+paddleocr>=2.7.0
+paddlepaddle>=2.6.0         # CPU build; for GPU use paddlepaddle-gpu
+
+# Audio rendering (optional — only if you want WAV output, not just MIDI)
+# fluidsynth must be installed at the OS level: `brew install fluid-synth` on Mac,
+# `apt-get install fluidsynth` on Linux. Then this Python binding:
+pyfluidsynth>=1.3.2
+
+# Notebooks
+jupyterlab>=4.0
+matplotlib>=3.7
+ipywidgets>=8.0
+
+# Dev
+pytest>=7.4

@@ -1,0 +1,61 @@
+# Conda environment for JadeDragon Transcriber on Brown Oscar (or any Linux GPU box).
+#
+# Create:    conda env create -f environment.yml
+# Activate:  conda activate jadedragon
+# Update:    conda env update -f environment.yml --prune
+
+name: jadedragon
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+  - defaults
+
+dependencies:
+  - python=3.11
+  - pip
+
+  # PyTorch + CUDA. Pin to a CUDA version that matches Oscar's drivers.
+  # Check `nvidia-smi` on Oscar for the max supported CUDA. 12.1 works on most modern A100/V100 nodes.
+  - pytorch=2.3.*
+  - torchvision=0.18.*
+  - pytorch-cuda=12.1
+
+  # Image / numerical
+  - numpy
+  - pillow
+  - opencv
+  - matplotlib
+
+  # Music
+  - music21
+
+  # Notebook (optional — skip on cluster if not using Jupyter)
+  - jupyterlab
+  - ipywidgets
+
+  # Dev
+  - pytest
+  - pyyaml
+
+  - pip:
+      - ultralytics>=8.2.0
+
+      # Lyric OCR — heavy and version-fragile. Commented by default since the
+      # pitch detector training doesn't need it. To enable lyric OCR (Path B
+      # of the demo notebook), install separately AFTER the env is built:
+      #
+      #   conda activate jadedragon
+      #   pip install paddleocr            # CPU-only is enough for inference
+      #   # or for GPU build, see https://www.paddlepaddle.org.cn/install/quick
+      #
+      # The pinned `paddlepaddle-gpu==2.6.1.post120` doesn't exist on PyPI for
+      # all Python versions — the suffix tying to CUDA 12.0 is unreliable. Avoid
+      # pinning here; install via paddle's installer command at runtime.
+      #
+      # - paddleocr>=2.7.0
+      # - paddlepaddle-gpu==2.6.1.post120
+
+      # Optional Oscar tooling
+      - tqdm
+      - wandb            # if you want experiment tracking; otherwise harmless

@@ -1,0 +1,56 @@
+# =============================================================================
+# JadeDragon Transcriber — .gitignore
+# =============================================================================
+# This repo contains source code only. Datasets, weights, paper PDFs, and
+# generated outputs stay local.
+
+# ---- Datasets (large; download separately) ---------------------------------
+# LGRC2024 (2.4 GB) — fetch from https://www.kaggle.com/datasets/liumeizhang/lgrc2024
+LGRC2024 dataset/
+# Jicheng Qupu (1.4 GB of PDFs) — separate corpus, not used yet
+Gongche notation dataset/
+Gongche notation dataset /
+
+# ---- Trained model weights (large) -----------------------------------------
+checkpoints/
+runs/
+*.pt
+*.pth
+*.onnx
+*.tar      # paddle weights download as .tar
+
+# ---- Generated outputs (regenerable) ----------------------------------------
+outputs/**
+!outputs/.gitkeep
+demo_lyrics/*.preview.png    # bootstrap-generated, regenerable
+
+# ---- References & private notes ---------------------------------------------
+# Paper PDFs are copyrighted; cite via DOI in README rather than committing.
+References/
+# kelly's personal planning docs
+Research Ideas/
+
+# ---- Python ----------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+
+# ---- Jupyter ---------------------------------------------------------------
+.ipynb_checkpoints/
+
+# ---- Soundfonts (large) ----------------------------------------------------
+*.sf2
+*.sf3
+
+# ---- OS / IDE --------------------------------------------------------------
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# ---- Logs ------------------------------------------------------------------
+logs/
+*.log
