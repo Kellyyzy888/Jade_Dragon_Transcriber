@@ -1,0 +1,75 @@
+{
+  "config": {
+    "conf": 0.55,
+    "pages": [
+      "107",
+      "120",
+      "137",
+      "150",
+      "170",
+      "172",
+      "182",
+      "186",
+      "194",
+      "20",
+      "85"
+    ],
+    "gt_pages": [
+      "107",
+      "137",
+      "172"
+    ]
+  },
+  "results": {
+    "107": {
+      "n_pred": 41,
+      "n_ref": 41,
+      "n_correct": 41,
+      "char_accuracy": 1.0,
+      "char_precision": 1.0,
+      "misreads": [],
+      "unmatched_pred": [],
+      "unmatched_ref": []
+    },
+    "137": {
+      "n_pred": 34,
+      "n_ref": 34,
+      "n_correct": 29,
+      "char_accuracy": 0.8529411764705882,
+      "char_precision": 0.8529411764705882,
+      "misreads": [
+        [
+          "嬾",
+          "嫩"
+        ],
+        [
+          "茶",
+          "荼"
+        ]
+      ],
+      "unmatched_pred": [
+        "夢",
+        "尋",
+        "丹"
+      ],
+      "unmatched_ref": [
+        "少",
+        "就",
+        "蘼"
+      ]
+    },
+    "172": {
+      "n_pred": 13,
+      "n_ref": 12,
+      "n_correct": 12,
+      "char_accuracy": 1.0,
+      "char_precision": 0.9230769230769231,
+      "misreads": [],
+      "unmatched_pred": [
+        "令"
+      ],
+      "unmatched_ref": []
+    }
+  },
+  "elapsed_seconds": 958.620817899704
+}

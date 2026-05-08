@@ -20,8 +20,8 @@ runs/
 *.tar      # paddle weights download as .tar
 
 # ---- Generated outputs (regenerable) ----------------------------------------
-outputs/**
-!outputs/.gitkeep
+# outputs/**    # commented out — outputs are committed
+# !outputs/.gitkeep    # commented out — outputs are committed
 demo_lyrics/*.preview.png    # bootstrap-generated, regenerable
 
 # ---- References & private notes ---------------------------------------------
