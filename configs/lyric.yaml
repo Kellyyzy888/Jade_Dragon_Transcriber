@@ -1,0 +1,18 @@
+# Lyric detector — single-class YOLO data config.
+#
+# This file is overwritten by `scripts/prepare_lyric_dataset.py` and
+# `scripts/bootstrap_lyric_bboxes.py` when they generate the dataset tree.
+# The version checked in here is a placeholder for first-time setup.
+#
+# IMPORTANT: this is a *detection-only* dataset. The single class "lyric"
+# learns to localize lyric character bboxes; character identity is left to
+# the VLM recognizer downstream. This is the right design because lyric
+# identity is an open vocabulary (~thousands of distinct characters) and a
+# YOLO classifier head wouldn't generalize to unseen characters.
+
+path: ../lyric_dataset   # set by prepare_lyric_dataset.py
+train: images/train
+val: images/val
+nc: 1
+names:
+  0: lyric

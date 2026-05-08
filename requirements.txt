@@ -6,7 +6,10 @@ numpy>=1.24.0
 opencv-python>=4.8.0
 pyyaml>=6.0
 
-# Lyric OCR (optional — manual fallback works without it)
+# Lyric OCR — VLM backend (recommended for calligraphic CJK)
+anthropic>=0.40.0           # Claude vision; requires ANTHROPIC_API_KEY at runtime
+# Lyric OCR — classical backends (kept for non-calligraphic pages)
+easyocr>=1.7.0
 paddleocr>=2.7.0
 paddlepaddle>=2.6.0         # CPU build; for GPU use paddlepaddle-gpu
 

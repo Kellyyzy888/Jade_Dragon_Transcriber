@@ -82,7 +82,8 @@ def transcribe_with_detector(
     *,
     out_dir: Union[str, Path],
     use_ocr: bool = True,
-    ocr_backend: str = "easyocr",          # "easyocr" | "paddleocr"
+    ocr_backend: str = "easyocr",          # "easyocr" | "paddleocr" | "yolo_vlm"
+    lyric_weights: Optional[Union[str, Path]] = None,
     manual_lyrics_path: Optional[Union[str, Path]] = None,
     work_title: str = "Gongche transcription",
     tempo_bpm: int = 80,
@@ -91,7 +92,16 @@ def transcribe_with_detector(
     # Back-compat: old callers used `use_paddle_ocr=True/False`.
     use_paddle_ocr: Optional[bool] = None,
 ) -> dict:
-    """Full pipeline: trained YOLO for pitches + OCR (or manual lyrics) for lyrics."""
+    """Full pipeline: trained YOLO for pitches + lyrics-source for lyrics → MusicXML/MIDI/WAV.
+
+    Lyric source is determined by, in priority order:
+      - `manual_lyrics_path` if given (hand-edited JSON)
+      - the OCR backend chosen by `ocr_backend` if `use_ocr=True`:
+        * "easyocr" / "paddleocr": single-stage CJK OCR (limited on calligraphy).
+        * "yolo_vlm": trained lyric YOLO (boxes) + Claude vision (characters).
+          Requires `lyric_weights` and ANTHROPIC_API_KEY in env.
+      - empty list (no lyrics in output) otherwise
+    """
     from .pitch_detector import PitchDetector
 
     # Back-compat shim
@@ -109,7 +119,11 @@ def transcribe_with_detector(
     if manual_lyrics_path is not None:
         lyric_boxes = load_manual_lyrics(manual_lyrics_path)
     elif use_ocr:
-        lyric_boxes = detect_and_recognize(image_path, backend=ocr_backend)
+        lyric_boxes = detect_and_recognize(
+            image_path,
+            backend=ocr_backend,
+            lyric_weights=lyric_weights,
+        )
     else:
         lyric_boxes = []
 

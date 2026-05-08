@@ -1,0 +1,10 @@
+# Single-class lyric character bbox detector.
+# Labels were drawn in VGG VIA, converted via scripts/via_to_yolo.py.
+# Augmented variants (<id>_N.jpg) are intentionally excluded — original pages only.
+# Relative path → works on both Mac and Oscar (resolved relative to this file).
+path: ./
+train: images/train
+val: images/val
+nc: 1
+names:
+  0: lyric

@@ -49,9 +49,20 @@ def find_image_and_label(page_id: str) -> tuple[Path, Path]:
     raise FileNotFoundError(f"page {page_id} not found in train or val")
 
 
-def infer_lyric_boxes(pitch_boxes: list[dict], page_w: int, page_h: int) -> list[dict]:
-    """Estimate lyric box positions from gongche layout."""
-    columns = cluster_columns(pitch_boxes)
+def infer_lyric_boxes(
+    pitch_boxes: list[dict],
+    page_w: int,
+    page_h: int,
+    *,
+    column_eps_factor: float = 2.5,
+) -> list[dict]:
+    """Estimate lyric box positions from gongche layout.
+
+    `column_eps_factor`: passed through to `cluster_columns`. The default 2.5
+    is calibrated for pitch-only input (gongche chars shift left/right within
+    a column based on octave-modifier prefix). The 1.5 default of
+    `cluster_columns` is for mixed lyric+pitch input."""
+    columns = cluster_columns(pitch_boxes, column_eps_factor=column_eps_factor)
     lyrics: list[dict] = []
 
     for col_idx, col in enumerate(columns):
@@ -133,6 +144,10 @@ def main() -> None:
     ap.add_argument("--out", default=None, help="Output JSON path (default: demo_lyrics/<page>.json)")
     ap.add_argument("--overlay", action="store_true",
                     help="Also save a preview PNG with red=pitches, blue=lyrics")
+    ap.add_argument("--column-eps-factor", type=float, default=2.5,
+                    help="Column-clustering tolerance multiplier (default 2.5). "
+                         "Increase if columns are over-segmented; decrease if "
+                         "adjacent columns are merged.")
     args = ap.parse_args()
 
     img_path, lbl_path = find_image_and_label(args.page)
@@ -142,7 +157,10 @@ def main() -> None:
     all_boxes = yolo_label_to_boxes(str(lbl_path), page_w, page_h, CLASS_NAMES)
     pitch_boxes = [b for b in all_boxes if b["kind"] == "pitch"]
 
-    lyrics = infer_lyric_boxes(pitch_boxes, page_w, page_h)
+    lyrics = infer_lyric_boxes(
+        pitch_boxes, page_w, page_h,
+        column_eps_factor=args.column_eps_factor,
+    )
     # strip private fields before saving
     payload = {
         "page_w": page_w,
